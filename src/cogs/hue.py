@@ -2,11 +2,14 @@ from phue import Bridge, PhueRegistrationException
 from .utils import Utils
 from enum import Enum
 import datetime
-import sys
+import sys, os
+sys.path.append(os.path.abspath(os.path.join('..', 'config')))
+import config
+
 
 class HueController():
     def __init__(self, bot):
-        self.bridge = Bridge('192.168.0.2')
+        self.bridge = Bridge(config.bridge_ip)
         self.bot = bot
         self.lights = self.bridge.lights
         self.groups = self.bridge.groups

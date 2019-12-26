@@ -9,6 +9,7 @@ import sys, traceback
 import datetime
 import asyncio
 
+
 class ScenesCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot

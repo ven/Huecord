@@ -1,6 +1,8 @@
 import asyncio
 from bot import Huecord
 from phue import Bridge, PhueRegistrationException
+import config
+
 
 async def retrieve_bot(loop):
     return Huecord(loop=loop)
@@ -16,7 +18,7 @@ if __name__ == "__main__":
     while not connected:
 
         try: # attempt to connect to bridge, start bot if successful.
-            bridge = Bridge('192.168.0.2') 
+            bridge = Bridge(config.bridge_ip) 
             connected = True
             print(f"✅ Hue Bridge on {bridge.ip} successfully connected.")
             run_bot()
