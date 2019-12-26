@@ -12,7 +12,7 @@ class Utils():
         if not self.config.owner_only:
             return True
             
-        if ctx.author.id == 204616460797083648:
+        if ctx.author.id == self.config.owner_id:
             return True
 
         await self.sendEmbed(ctx, description='**Sorry, you do not have permission to use this command.**')

@@ -1,6 +1,4 @@
-import subprocess
 import datetime
-from time import time, sleep
 from discord.ext import commands
 import discord
 from phue import Bridge, PhueRegistrationException
