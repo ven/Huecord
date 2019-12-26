@@ -12,18 +12,16 @@ import asyncio
 class LightsCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.hue = HueController(bot)
-        self.utils = Utils()
     
     async def cog_check(self, ctx):
-        return await self.utils.checkOwner(ctx)
+        return await self.bot.utils.checkOwner(ctx)
     
     @commands.group(
         invoke_without_command=True, name='lights', aliases=["light", "l"],
         description='Commands related to individual lights.'
     )
     async def lights(self, ctx):
-        lights = await self.hue.getLights('name')
+        lights = await self.bot.hue.getLights('name')
 
         embed = discord.Embed(title='💡 **Available Lights**')
 
@@ -37,20 +35,20 @@ class LightsCog(commands.Cog):
         description='Turns a single light on.'
     )
     async def _light_on(self, ctx, name: str):
-        res = await self.hue.turnLightOn(ctx, name)
+        res = await self.bot.hue.turnLightOn(ctx, name)
 
         if res:
-            await self.utils.sendEmbed(ctx, description=f'{self.bot.check} **Turned light {name} on successfully!**')
+            await self.bot.utils.sendEmbed(ctx, description=f'{self.bot.check} **Turned light {name} on successfully!**')
 
     @lights.command(
         name='off',
         description='Turns a single light off.'
     )
     async def _light_off(self, ctx, name: str):
-        res = await self.hue.turnLightOff(ctx, name)
+        res = await self.bot.hue.turnLightOff(ctx, name)
 
         if res:
-            await self.utils.sendEmbed(ctx, description=f'{self.bot.check} **Turned light {name} off successfully!**')
+            await self.bot.utils.sendEmbed(ctx, description=f'{self.bot.check} **Turned light {name} off successfully!**')
     
     @lights.command(
         name='brightness',
@@ -58,10 +56,10 @@ class LightsCog(commands.Cog):
     )
     async def _light_brightness(self, ctx, name: str, value: int):
         actualValue = (255/10) * value
-        res = await self.hue.lightBrightness(ctx, name, actualValue)
+        res = await self.bot.hue.lightBrightness(ctx, name, actualValue)
         
         if res:
-            await self.utils.sendEmbed(ctx, description=f'{self.bot.check} **Changed {name}\'s brightness to {value}!**')
+            await self.bot.utils.sendEmbed(ctx, description=f'{self.bot.check} **Changed {name}\'s brightness to {value}!**')
 
     @lights.command(
         name='colour', aliases=['color'],
@@ -69,13 +67,13 @@ class LightsCog(commands.Cog):
     )
     async def _light_colour(self, ctx, name: str, x: float, y: float):
         if x > 1 or y > 1:
-            await self.utils.sendEmbed(ctx, description=f'**The x and y coordinates cannot be greater than 1.**')
+            await self.bot.utils.sendEmbed(ctx, description=f'**The x and y coordinates cannot be greater than 1.**')
         else:
             colours = [x,y]
-            res = await self.hue.lightColour(ctx, name, colours)
+            res = await self.bot.hue.lightColour(ctx, name, colours)
 
             if res:
-                await self.utils.sendEmbed(ctx, description=f'{self.bot.check} **Changed {name}\'s colour to {colours}!**')
+                await self.bot.utils.sendEmbed(ctx, description=f'{self.bot.check} **Changed {name}\'s colour to {colours}!**')
 
     @lights.command(
         name='random',
@@ -83,17 +81,17 @@ class LightsCog(commands.Cog):
     )
     async def _light_random(self, ctx, name: str):
         randomColour = [random.random(),random.random()]
-        res = await self.hue.lightColour(ctx, name, randomColour)
+        res = await self.bot.hue.lightColour(ctx, name, randomColour)
 
         if res:
-            await self.utils.sendEmbed(ctx, description=f'{self.bot.check} **Changed {name}\'s colour to a random colour!**')
+            await self.bot.utils.sendEmbed(ctx, description=f'{self.bot.check} **Changed {name}\'s colour to a random colour!**')
     
     @lights.command(
         aliases=['info', 'status'], name='information',
         description='Shows the status of a single light.'
     )
     async def _light_information(self, ctx, name: str):
-        res = await self.hue.lightStatus(ctx, name)
+        res = await self.bot.hue.lightStatus(ctx, name)
 
         if res:
             status = res["state"]

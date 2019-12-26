@@ -13,7 +13,6 @@ class HueController():
         self.bot = bot
         self.lights = self.bridge.lights
         self.groups = self.bridge.groups
-        self.utils = Utils()
 
     # Core Methods
 
@@ -73,7 +72,7 @@ class HueController():
         if light:
             return self.bridge.get_light(light)
 
-        await self.utils.sendEmbed(ctx, description=f'{self.bot.cross} **Light {lightName} doesn\'t exist.**')
+        await self.bot.utils.sendEmbed(ctx, description=f'{self.bot.cross} **Light {lightName} doesn\'t exist.**')
         return False
         
     async def getLights(self, mode: str) -> dict:
@@ -95,7 +94,7 @@ class HueController():
             await self.log(action=1, light=light)
             return True
 
-        await self.utils.sendEmbed(ctx, description=f'{self.bot.cross} **Light {lightName} doesn\'t exist.**')
+        await self.bot.utils.sendEmbed(ctx, description=f'{self.bot.cross} **Light {lightName} doesn\'t exist.**')
         return False
 
     async def turnLightOff(self, ctx, lightName: str) -> bool:
@@ -105,7 +104,7 @@ class HueController():
             await self.log(action=2, light=light)
             return True
         
-        await self.utils.sendEmbed(ctx, description=f'{self.bot.cross} **Light {lightName} doesn\'t exist.**')
+        await self.bot.utils.sendEmbed(ctx, description=f'{self.bot.cross} **Light {lightName} doesn\'t exist.**')
         return False
 
     async def lightBrightness(self, ctx, lightName: str, brightness: float) -> bool:
@@ -115,7 +114,7 @@ class HueController():
             await self.log(action=4, light=light)
             return True
         
-        await self.utils.sendEmbed(ctx, description=f'{self.bot.cross} **Light {lightName} doesn\'t exist.**')
+        await self.bot.utils.sendEmbed(ctx, description=f'{self.bot.cross} **Light {lightName} doesn\'t exist.**')
         return False
 
     async def lightColour(self, ctx, lightName: str, colours: list) -> bool:
@@ -125,7 +124,7 @@ class HueController():
             await self.log(action=3, light=light)
             return True
 
-        await self.utils.sendEmbed(ctx, description=f'{self.bot.cross} **Light {lightName} doesn\'t exist.**')
+        await self.bot.utils.sendEmbed(ctx, description=f'{self.bot.cross} **Light {lightName} doesn\'t exist.**')
         return False
 
     # Light Groups
@@ -140,7 +139,7 @@ class HueController():
             await self.log(action=5, light=group)
             return True
 
-        await self.utils.sendEmbed(ctx, description=f'{self.bot.cross} **Group {groupName} doesn\'t exist.**')
+        await self.bot.utils.sendEmbed(ctx, description=f'{self.bot.cross} **Group {groupName} doesn\'t exist.**')
         return False
 
     async def turnGroupOff(self, ctx, groupName: str) -> bool:
@@ -150,7 +149,7 @@ class HueController():
             await self.log(action=6, light=group)
             return True
 
-        await self.utils.sendEmbed(ctx, description=f'{self.bot.cross} **Group {groupName} doesn\'t exist.**')
+        await self.bot.utils.sendEmbed(ctx, description=f'{self.bot.cross} **Group {groupName} doesn\'t exist.**')
         return False
     
     async def groupColour(self, ctx, groupName: str, colours: list) -> bool:
@@ -160,7 +159,7 @@ class HueController():
             await self.log(action=7, light=group)
             return True
 
-        await self.utils.sendEmbed(ctx, description=f'{self.bot.cross} **Group {groupName} doesn\'t exist.**')
+        await self.bot.utils.sendEmbed(ctx, description=f'{self.bot.cross} **Group {groupName} doesn\'t exist.**')
         return False
 
     async def groupBrightness(self, ctx, groupName: str, brightness: float) -> bool:
@@ -170,7 +169,7 @@ class HueController():
             await self.log(action=8, light=group)
             return True
 
-        await self.utils.sendEmbed(ctx, description=f'{self.bot.cross} **Group {groupName} doesn\'t exist.**')
+        await self.bot.utils.sendEmbed(ctx, description=f'{self.bot.cross} **Group {groupName} doesn\'t exist.**')
         return False
     
     async def groupDelete(self, ctx, groupName: str) -> bool:
@@ -180,7 +179,7 @@ class HueController():
             self.bridge.delete_group(groupID)
             return True
         
-        await self.utils.sendEmbed(ctx, description=f'{self.bot.cross} **Group {groupName} doesn\'t exist.**')
+        await self.bot.utils.sendEmbed(ctx, description=f'{self.bot.cross} **Group {groupName} doesn\'t exist.**')
         return False
     
     # Scenes

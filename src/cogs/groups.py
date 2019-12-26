@@ -13,23 +13,21 @@ import asyncio
 class GroupsCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.hue = HueController(bot)
-        self.utils = Utils()
     
     async def cog_check(self, ctx):
-        return await self.utils.checkOwner(ctx)
+        return await self.bot.utils.checkOwner(ctx)
 
     @commands.group(
         invoke_without_command=True, name='groups', aliases=["group", "g"],
         description='Commands related to light groups.'
     )
     async def groups(self, ctx):
-        groups = await self.hue.getGroups()
+        groups = await self.bot.hue.getGroups()
 
         embed = discord.Embed(title='💡 **Light Groups**')
 
         for id, info in groups.items():
-            lightNames = [await self.hue.getLightName(ctx, int(x)) for x in info["lights"]]
+            lightNames = [await self.bot.hue.getLightName(ctx, int(x)) for x in info["lights"]]
 
             text = f"""
             🆔 **ID**: {id}
@@ -47,20 +45,20 @@ class GroupsCog(commands.Cog):
         description='Turns a light group on.'
     )
     async def _group_on(self, ctx, name: str):
-        res = await self.hue.turnGroupOn(ctx, name)
+        res = await self.bot.hue.turnGroupOn(ctx, name)
 
         if res:
-            await self.utils.sendEmbed(ctx, description=f'{self.bot.check} **Turned group {name.capitalize()} on successfully!**')
+            await self.bot.utils.sendEmbed(ctx, description=f'{self.bot.check} **Turned group {name.capitalize()} on successfully!**')
 
     @groups.command(
         name='off',
         description='Turns a light group off.'
     )
     async def _group_off(self, ctx, name: str):
-        res = await self.hue.turnGroupOff(ctx, name)
+        res = await self.bot.hue.turnGroupOff(ctx, name)
 
         if res:
-            await self.utils.sendEmbed(ctx, description=f'{self.bot.check} **Turned group {name.capitalize()} off successfully!**')
+            await self.bot.utils.sendEmbed(ctx, description=f'{self.bot.check} **Turned group {name.capitalize()} off successfully!**')
     
     @groups.command(
         name='brightness',
@@ -68,20 +66,20 @@ class GroupsCog(commands.Cog):
     )
     async def _group_brightness(self, ctx, name: str, value: int):
         actualValue = (255/10) * value
-        res = await self.hue.groupBrightness(ctx, name, actualValue)
+        res = await self.bot.hue.groupBrightness(ctx, name, actualValue)
 
         if res:
-            await self.utils.sendEmbed(ctx, description=f'{self.bot.check} **Changed group {name}\'s brightness to {value}!**')
+            await self.bot.utils.sendEmbed(ctx, description=f'{self.bot.check} **Changed group {name}\'s brightness to {value}!**')
 
     @groups.command(
         name='delete',
         description='Deletes a light group.'
     )
     async def _group_delete(self, ctx, name: str):
-        res = await self.hue.groupDelete(ctx, name)
+        res = await self.bot.hue.groupDelete(ctx, name)
 
         if res:
-            await self.utils.sendEmbed(ctx, description=f'{self.bot.check} **Successfully deleted group {name}!**')
+            await self.bot.utils.sendEmbed(ctx, description=f'{self.bot.check} **Successfully deleted group {name}!**')
 
 def setup(bot):
     bot.add_cog(GroupsCog(bot))

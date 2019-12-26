@@ -13,11 +13,11 @@ import asyncio
 class GeneralCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.hue = HueController(bot)
-        self.utils = Utils()
+        self.bot.hue = HueController(bot)
+        self.bot.utils = Utils()
     
     async def cog_check(self, ctx):
-        return await self.utils.checkOwner(ctx)
+        return await self.bot.utils.checkOwner(ctx)
     
     @commands.command(
         description='Attempts to connect with your Hue Bridge once the sync button has been pressed.'
@@ -29,14 +29,14 @@ class GeneralCog(commands.Cog):
 
         await ctx.send(embed=embed)
 
-        await self.hue.connect()
+        await self.bot.hue.connect()
     
     @commands.command(
         aliases=["configuration"],
         description='Returns your Hue Bridge configuration details.'
     )
     async def config(self, ctx):
-        data = (await self.hue.getAPI())["config"]
+        data = (await self.bot.hue.getAPI())["config"]
 
         embed = discord.Embed(colour=discord.Colour.blue())
         embed.title = '⚙️ **Hue Bridge Configuration**'
