@@ -20,6 +20,7 @@
 
 ## Setup
 
+- Clone this repository: `$ git clone https://github.com/venoras/Huecord`
 - Modify the `config.example.py` with the relevant parameters, and rename it to `config.py`.
 - To find your **Hue Bridge IP**, click **[here](https://discovery.meethue.com)** and copy the `Internal IP Address` value.
 - To run the bot, use `python3 launcher.py`. If it is your first time running the bot, ensure you have pushed the **sync button** on your **Hue Bridge** prior to launching it.
