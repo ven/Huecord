@@ -1,0 +1,16 @@
+aiohttp==3.5.4
+async-timeout==3.0.1
+attrs==19.3.0
+braceexpand==0.1.5
+chardet==3.0.4
+discord.py==1.2.5
+humanize==0.5.1
+idna==2.8
+idna-ssl==1.1.0
+import-expression==0.7.0
+jishaku==1.17.0.169
+multidict==4.7.2
+phue==1.1
+typing-extensions==3.7.4.1
+websockets==6.0
+yarl==1.4.2
